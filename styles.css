@@ -6,16 +6,19 @@ body {
     height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
+    background-color: antiquewhite;
 }
 
 #game-arena {
     position: relative;
-    width: 80vw; /* Scale with the screen width */
-    height: 80vw; /* Ensure it's square by matching height to width */
-    max-width: 600px;
+    width: 90vw; /* Scale with screen size */
+    height: 90vw; /* Square the arena */
+    max-width: 600px; /* Max for larger screens */
     max-height: 600px;
-    background-color: #e2e2e2;
+    background-color: #333;
     border: 2px solid #000;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
 }
 
 .snake, .food {
@@ -25,11 +28,19 @@ body {
 }
 
 .snake {
-    background-color: green;
+    background-color: chartreuse;
 }
 
 .food {
     background-color: red;
+    border-radius: 50%;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.5;
+    }
 }
 
 #game-over {
@@ -45,13 +56,19 @@ body {
     text-align: center;
 }
 
-.start-button, #restart-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
 #score-board {
     font-size: 24px;
     margin-bottom: 10px;
 }
+
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+    background-color: orangered;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
