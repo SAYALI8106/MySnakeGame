@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let dy = 0;
     let intervalId;
     let gameSpeed = 200;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
 
     function moveFood() {
         let newX, newY;
@@ -55,6 +59,52 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (e.key === 'ArrowRight' && !isGoingLeft) {
             dx = cellSize;
             dy = 0;
+        }
+    }
+
+    // Swipe handling for touch devices
+    function handleTouchStart(e) {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    }
+
+    function handleTouchEnd(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleGesture();
+    }
+
+    function handleGesture() {
+        const dxSwipe = touchEndX - touchStartX;
+        const dySwipe = touchEndY - touchStartY;
+
+        const isGoingDown = dy === cellSize;
+        const isGoingUp = dy === -cellSize;
+        const isGoingRight = dx === cellSize;
+        const isGoingLeft = dx === -cellSize;
+
+        if (Math.abs(dxSwipe) > Math.abs(dySwipe)) {
+            // Horizontal swipe
+            if (dxSwipe > 0 && !isGoingLeft) {
+                // Swipe right
+                dx = cellSize;
+                dy = 0;
+            } else if (dxSwipe < 0 && !isGoingRight) {
+                // Swipe left
+                dx = -cellSize;
+                dy = 0;
+            }
+        } else {
+            // Vertical swipe
+            if (dySwipe > 0 && !isGoingUp) {
+                // Swipe down
+                dx = 0;
+                dy = cellSize;
+            } else if (dySwipe < 0 && !isGoingDown) {
+                // Swipe up
+                dx = 0;
+                dy = -cellSize;
+            }
         }
     }
 
@@ -111,6 +161,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!gameStarted) {
             gameStarted = true;
             document.addEventListener('keydown', changeDirection);
+            document.addEventListener('touchstart', handleTouchStart, false);
+            document.addEventListener('touchend', handleTouchEnd, false);
             gameLoop();
         }
     }
@@ -131,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     document.getElementById('restart-button').addEventListener('click', function () {
-        hideGameOverUI();  // Hide the game over screen when restarting
+        hideGameOverUI();
         score = 0;
         dx = cellSize;
         dy = 0;
@@ -157,11 +209,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.appendChild(startButton);
     }
 
-    // Ensure game over screen is hidden when the page loads or refreshes
-    window.onload = function() {
+    window.onload = function () {
         hideGameOverUI();
     };
 
     initiateGame();
 });
-
