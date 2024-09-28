@@ -1,104 +1,57 @@
 body {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
     height: 100vh;
-    background-color: antiquewhite;
-    text-align: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
 #game-arena {
-    width: 600px;
-    height: 600px;
-    background-color: #333;
     position: relative;
-    border: 5px solid #666;
-    margin-bottom: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    width: 80vw; /* Scale with the screen width */
+    height: 80vw; /* Ensure it's square by matching height to width */
+    max-width: 600px;
+    max-height: 600px;
+    background-color: #e2e2e2;
+    border: 2px solid #000;
 }
 
-#score-board {
-    font-size: x-large;
-    font-weight: bold;
-    color: black;
-    margin: 10px 0;
-}
-
-.start-button {
-    background-color: orangered;
-    color: white;
-    padding: 15px 30px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 18px;
-    margin: 4px 0;
-    cursor: pointer;
-    border: none;
-    border-radius: 6px;
-}
-
-.food {
+.snake, .food {
+    position: absolute;
     width: 20px;
     height: 20px;
-    background-color: red;
-    position: absolute;
-    border-radius: 50%;
-    animation: blink 1s infinite;
-}
-
-@keyframes blink {
-    50% {
-        opacity: 0.5;
-    }
 }
 
 .snake {
-    width: 20px;
-    height: 20px;
-    background-color: chartreuse;
-    position: absolute;
-    border-radius: 5px;
+    background-color: green;
 }
 
-/* Game Over Overlay */
+.food {
+    background-color: red;
+}
+
 #game-over {
-    display: none; /* Hidden by default */
+    display: none;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 10; /* Ensure it's on top */
     color: white;
+    padding: 20px;
+    border-radius: 10px;
     text-align: center;
-    font-size: 2rem;
 }
 
-#game-over h2 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-}
-
-#game-over p {
-    margin-bottom: 20px;
-}
-
-#restart-button {
-    background-color: orangered;
-    color: white;
-    padding: 15px 30px;
-    font-size: 18px;
-    border: none;
-    border-radius: 6px;
+.start-button, #restart-button {
+    padding: 10px 20px;
+    font-size: 16px;
     cursor: pointer;
 }
 
-#restart-button:hover {
-    background-color: #ff4500;
+#score-board {
+    font-size: 24px;
+    margin-bottom: 10px;
 }
